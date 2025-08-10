@@ -10,7 +10,7 @@ const Header: React.FC<{ className?: string }> = ({ className = '' }) => {
   const menuItems = [
     { label: 'Accueil', href: '/' },
     { label: 'Devis', href: '/devis' },
-    { label: 'SAV', href: '#' },
+    { label: 'SAV', href: '/sav' },
     { href: '/contact', label: 'Contact' },
   ];
 

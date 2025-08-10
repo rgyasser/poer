@@ -9,7 +9,7 @@ const Header: React.FC = () => {
     const menuItems = [
         { label: 'Accueil', href: '/' },
         { label: 'Devis', href: '/devis' },
-        { label: 'SAV', href: '#' },
+        { label: 'SAV', href: '/sav' },
         { href: '/contact', label: 'Contact' },
     ];
     return (

@@ -2,15 +2,11 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import { ChevronDown } from 'lucide-react'; // Import de l'icône de flèche
 import Header from '@/components/common/Header';
-import Slider from 'react-slick';
-
-// Import des styles de react-slick
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-
+import { motion, useAnimation } from 'framer-motion';
 // --- Interfaces pour gérer toutes nos mises en page ---
 interface VehicleSpec {
   label: string;
@@ -34,6 +30,33 @@ interface ColorOption {
 const ShowcasePage: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedColor, setSelectedColor] = useState<string>('black');
+  const [isMuted, setIsMuted] = useState(false); // Gère l'état du son
+  const videoRef = useRef<HTMLVideoElement>(null); // Référence à l'élément vidéo
+
+  // Effet pour gérer le son de la vidéo en fonction du défilement
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Si la vidéo est visible à plus de 50%, on active le son.
+        // Sinon, on le coupe.
+        setIsMuted(!entry.isIntersecting);
+      },
+      {
+        threshold: 0.5, // Se déclenche quand 50% de la vidéo est visible/invisible
+      }
+    );
+
+    const currentVideoRef = videoRef.current;
+    if (currentVideoRef) {
+      observer.observe(currentVideoRef);
+    }
+
+    return () => {
+      if (currentVideoRef) {
+        observer.unobserve(currentVideoRef);
+      }
+    };
+  }, []);
 
   // --- Données pour la Fiche Technique ---
   const vehicleSpecs: VehicleSpec[] = [
@@ -47,25 +70,39 @@ const ShowcasePage: React.FC = () => {
   ];
   const initialSpecsCount = 4;
 
-  const heroImages = ['/images/carou.png', '/images/carou2.png', '/images/img_clip_path_group.png'];
-
   // --- Données pour les sections de caractéristiques ---
   const puissanceSection: FeatureSection = {
     title: 'Puissance',
     subtitle: 'La puissance qui fait la différence.',
     items: [
-      { image: '/images/carou.png', description: 'Moteur puissant, taillé pour affronter les conditions les plus extrêmes.' },
-      { image: '/images/carou2.png', description: 'Couple élevé disponible à bas régime pour une traction optimale.' },
-      { image: '/images/img_clip_path_group.png', description: 'Fiabilité prouvée pour les professionnels les plus exigeants.' },
+      {
+        image: '/images/carou.png',
+        description: 'Moteur puissant, taillé pour affronter les conditions les plus extrêmes.',
+      },
+      {
+        image: '/images/carou2.png',
+        description: 'Couple élevé disponible à bas régime pour une traction optimale.',
+      },
+      {
+        image: '/images/img_clip_path_group.png',
+        description: 'Fiabilité prouvée pour les professionnels les plus exigeants.',
+      },
     ],
   };
-  
+
   const pneuSection: FeatureSection = {
     title: 'Pneu',
     subtitle: 'Des pneus surélevés pour dominer tous les terrains.',
     items: [
-      { image: '/images/img_clip_path_group.png', description: 'Traction Control System Evite le patinage des roues et avance meme dans la boue.' },
-      { image: '/images/carou.png', description: "Grace a sa garde au sol eleve, capable d'affronter tout types de chantiers." },
+      {
+        image: '/images/img_clip_path_group.png',
+        description:
+          'Traction Control System Evite le patinage des roues et avance meme dans la boue.',
+      },
+      {
+        image: '/images/carou.png',
+        description: "Grace a sa garde au sol eleve, capable d'affronter tout types de chantiers.",
+      },
     ],
   };
 
@@ -73,76 +110,128 @@ const ShowcasePage: React.FC = () => {
     title: 'Siege',
     subtitle: 'Confort pensé pour tenir tous les trajets.',
     items: [
-        { image: '/images/carou.png', description: 'sièges et volant multifonction en cuir' },
-        { image: '/images/carou2.png', description: 'sièges réglables pour un maintien personnalisé toute la journée.' },
-        { image: '/images/img_clip_path_group.png', description: 'Confort pensé pour les professionnels avec cabine spacieuse' },
-    ]
+      { image: '/images/carou.png', description: 'sièges et volant multifonction en cuir' },
+      {
+        image: '/images/carou2.png',
+        description: 'sièges réglables pour un maintien personnalisé toute la journée.',
+      },
+      {
+        image: '/images/img_clip_path_group.png',
+        description: 'Confort pensé pour les professionnels avec cabine spacieuse',
+      },
+    ],
   };
-  
+
   const visionSection: FeatureSection = {
     title: 'Systeme de vision',
     subtitle: 'Une vue complète, zéro angle mort.',
     items: [
-        { image: '/images/img_clip_path_group.png', description: 'Systeme de vision offre une visibilite optimale autour de vehicule.' },
-        { image: '/images/carou.png', description: 'Simplifie les déplacements en espaces restreints, évite les collisions.' },
-        { image: '/images/carou2.png', description: 'Caméras et capteurs intelligents pour assister en temps réel.' },
-    ]
+      {
+        image: '/images/img_clip_path_group.png',
+        description: 'Systeme de vision offre une visibilite optimale autour de vehicule.',
+      },
+      {
+        image: '/images/carou.png',
+        description: 'Simplifie les déplacements en espaces restreints, évite les collisions.',
+      },
+      {
+        image: '/images/carou2.png',
+        description: 'Caméras et capteurs intelligents pour assister en temps réel.',
+      },
+    ],
   };
 
   const securiteSection: FeatureSection = {
     title: 'Securite',
     subtitle: 'Contrôle total, protection maximale.',
     items: [
-        { image: '/images/img_clip_path_group.png', description: 'Systeme de vision offre une visibilite optimale autour de vehicule.' },
-        { image: '/images/carou.png', description: 'Simplifie les déplacements en espaces restreints, évite les collisions.' },
-        { image: '/images/carou2.png', description: 'Caméras et capteurs intelligents pour assister en temps réel.' },
-    ]
+      {
+        image: '/images/img_clip_path_group.png',
+        description: 'Systeme de vision offre une visibilite optimale autour de vehicule.',
+      },
+      {
+        image: '/images/carou.png',
+        description: 'Simplifie les déplacements en espaces restreints, évite les collisions.',
+      },
+      {
+        image: '/images/carou2.png',
+        description: 'Caméras et capteurs intelligents pour assister en temps réel.',
+      },
+    ],
   };
 
   const colorOptions: ColorOption[] = [
     { id: 'black', name: 'Noir', color: '#000000', imageSrc: '/images/carou.png' },
     { id: 'silver', name: 'Argent', color: '#d9d9d9', imageSrc: '/images/carou2.png' },
-    { id: 'red', name: 'Rouge', color: '#f11a1a', imageSrc: '/images/img_clip_path_group.png' }, 
+    { id: 'red', name: 'Rouge', color: '#f11a1a', imageSrc: '/images/img_clip_path_group.png' },
     { id: 'green', name: 'Vert', color: '#04b200', imageSrc: '/images/carou.png' },
   ];
 
-  // On trouve l'objet complet de la couleur active pour accéder à son image
   const activeColor = colorOptions.find((c) => c.id === selectedColor) || colorOptions[0];
-
+  const controls = useAnimation();
   return (
     <div className="w-full bg-gray-100">
       <Header />
 
       <main className="w-full">
-        {/* Section Carrousel */}
-        <section>
-          <Slider
-            dots
-            autoplay
-            autoplaySpeed={4000}
-            arrows={false}
-            infinite
-            className="w-full h-[50vh] md:h-[90vh] max-h-[700px]"
+        {/* Section Vidéo Hero - Prend tout l'écran */}
+        <section className="relative w-full h-screen overflow-hidden">
+          <video
+            ref={videoRef}
+            src="/images/vedio.mp4"
+            autoPlay
+            loop
+            muted={isMuted} // Le son est contrôlé par l'état
+            playsInline
+            className="w-full h-full object-cover"
           >
-            {heroImages.map((src, i) => (
-              <div key={i} className="relative w-full h-[50vh] md:h-[90vh] max-h-[700px]">
-                <Image
-                  src={src}
-                  alt={`Hero slide ${i + 1}`}
-                  fill
-                  className="object-cover"
-                  priority={i === 0}
-                />
-              </div>
-            ))}
-          </Slider>
+            Votre navigateur ne supporte pas la lecture de vidéos.
+          </video>
+          <div className="absolute inset-0 bg-black/30 flex items-center justify-center"></div>
+          {/* Flèche pour faire défiler vers le bas */}
+          <motion.button
+            onClick={() => {
+              // Anime d'abord la flèche
+              controls.start({
+                y: [0, 10, 0],
+                transition: { duration: 0.5 },
+              });
+
+              // Puis fait défiler vers la section
+              document.getElementById('fiche-technique')?.scrollIntoView({
+                behavior: 'smooth',
+              });
+            }}
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 bg-transparent border-none cursor-pointer"
+            aria-label="Faire défiler vers le bas"
+            animate={controls}
+            whileHover={{
+              scale: 1.2,
+              transition: { duration: 0.2 },
+            }}
+            whileTap={{
+              scale: 0.9,
+              transition: { duration: 0.1 },
+            }}
+          >
+            <motion.div
+              animate={{
+                y: [0, 5, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+            >
+              <ChevronDown className="w-10 h-10 text-white" />
+            </motion.div>
+          </motion.button>
         </section>
 
         {/* --- SECTION TECHNIQUE (FICHE TECHNIQUE ET TOUTES LES CARACTÉRISTIQUES) --- */}
-        <section className="py-12 md:py-20 bg-gray-50">
+        <section id="fiche-technique" className="py-12 md:py-20 bg-gray-50">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            {/* 1. Titre et grille de la Fiche Technique */}
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Fiche Technique</h2>
             </div>
@@ -155,6 +244,10 @@ const ShowcasePage: React.FC = () => {
                       alt={`Vue du véhicule ${colNum}`}
                       fill
                       className="object-cover"
+                      onError={(e) =>
+                        (e.currentTarget.src =
+                          'https://placehold.co/600x400/cccccc/FFFFFF?text=Image')
+                      }
                     />
                   </div>
                   <div className="space-y-4">
@@ -192,7 +285,7 @@ const ShowcasePage: React.FC = () => {
               ))}
             </div>
 
-            {/* 2. Section "Puissance" */}
+            {/* Section "Puissance" */}
             <div className="mt-16 md:mt-24">
               <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
@@ -209,6 +302,10 @@ const ShowcasePage: React.FC = () => {
                         alt={`${puissanceSection.title} - ${index + 1}`}
                         fill
                         className="object-cover"
+                        onError={(e) =>
+                          (e.currentTarget.src =
+                            'https://placehold.co/600x400/cccccc/FFFFFF?text=Image')
+                        }
                       />
                     </div>
                     <p className="text-gray-700 leading-relaxed">{item.description}</p>
@@ -216,8 +313,8 @@ const ShowcasePage: React.FC = () => {
                 ))}
               </div>
             </div>
-            
-            {/* 3. Section "Pneu" */}
+
+            {/* Section "Pneu" */}
             <div className="mt-16 md:mt-24">
               <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
@@ -234,6 +331,10 @@ const ShowcasePage: React.FC = () => {
                         alt={`${pneuSection.title} - ${index + 1}`}
                         fill
                         className="object-cover"
+                        onError={(e) =>
+                          (e.currentTarget.src =
+                            'https://placehold.co/600x400/cccccc/FFFFFF?text=Image')
+                        }
                       />
                     </div>
                     <p className="text-gray-700 leading-relaxed">{item.description}</p>
@@ -241,11 +342,13 @@ const ShowcasePage: React.FC = () => {
                 ))}
               </div>
             </div>
-            
-            {/* 4. Section "Siege" */}
+
+            {/* Section "Siege" */}
             <div className="mt-16 md:mt-24">
               <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">{siegeSection.title}</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+                  {siegeSection.title}
+                </h2>
                 <p className="mt-2 text-lg text-gray-600">{siegeSection.subtitle}</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -257,6 +360,10 @@ const ShowcasePage: React.FC = () => {
                         alt={`${siegeSection.title} - ${index + 1}`}
                         fill
                         className="object-cover"
+                        onError={(e) =>
+                          (e.currentTarget.src =
+                            'https://placehold.co/600x400/cccccc/FFFFFF?text=Image')
+                        }
                       />
                     </div>
                     <p className="text-gray-700 leading-relaxed">{item.description}</p>
@@ -265,10 +372,12 @@ const ShowcasePage: React.FC = () => {
               </div>
             </div>
 
-            {/* 5. Section "Systeme de vision" */}
+            {/* Section "Systeme de vision" */}
             <div className="mt-16 md:mt-24">
               <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">{visionSection.title}</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+                  {visionSection.title}
+                </h2>
                 <p className="mt-2 text-lg text-gray-600">{visionSection.subtitle}</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -280,6 +389,10 @@ const ShowcasePage: React.FC = () => {
                         alt={`${visionSection.title} - ${index + 1}`}
                         fill
                         className="object-cover"
+                        onError={(e) =>
+                          (e.currentTarget.src =
+                            'https://placehold.co/600x400/cccccc/FFFFFF?text=Image')
+                        }
                       />
                     </div>
                     <p className="text-gray-700 leading-relaxed">{item.description}</p>
@@ -288,10 +401,12 @@ const ShowcasePage: React.FC = () => {
               </div>
             </div>
 
-            {/* 6. Section "Securite" */}
+            {/* Section "Securite" */}
             <div className="mt-16 md:mt-24">
               <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">{securiteSection.title}</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
+                  {securiteSection.title}
+                </h2>
                 <p className="mt-2 text-lg text-gray-600">{securiteSection.subtitle}</p>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
@@ -303,6 +418,10 @@ const ShowcasePage: React.FC = () => {
                         alt={`${securiteSection.title} - ${index + 1}`}
                         fill
                         className="object-cover"
+                        onError={(e) =>
+                          (e.currentTarget.src =
+                            'https://placehold.co/600x400/cccccc/FFFFFF?text=Image')
+                        }
                       />
                     </div>
                     <p className="text-gray-700 leading-relaxed">{item.description}</p>
@@ -310,7 +429,6 @@ const ShowcasePage: React.FC = () => {
                 ))}
               </div>
             </div>
-
           </div>
         </section>
 
@@ -332,6 +450,10 @@ const ShowcasePage: React.FC = () => {
                 alt={`Aperçu du véhicule en couleur ${activeColor.name}`}
                 fill
                 className="object-cover transition-opacity duration-500 ease-in-out"
+                onError={(e) =>
+                  (e.currentTarget.src =
+                    'https://placehold.co/1200x500/cccccc/FFFFFF?text=Image+du+vehicule')
+                }
               />
             </div>
             <div className="flex flex-col items-center">
