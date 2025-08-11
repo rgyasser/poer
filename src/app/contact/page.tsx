@@ -15,11 +15,20 @@ const Header: React.FC<{ className?: string }> = ({ className = '' }) => {
   ];
 
   return (
-    <header className={`w-full bg-white backdrop-blur-sm text-gray-900 fixed top-0 left-0 right-0 z-50 shadow-md ${className}`}>
+    <header
+      className={`w-full bg-white backdrop-blur-sm text-gray-900 fixed top-0 left-0 right-0 z-50 shadow-md ${className}`}
+    >
       <div className="container mx-auto px-6">
         <div className="flex justify-between items-center h-20">
-          <a href="/" className="flex-shrink-0 flex items-center gap-2 text-2xl font-bold text-blue-600 hover:text-blue-500 transition-colors">
-            <img src="images/logo.png" alt="" className='w-13 hover:scale-95 transition-transform'/>
+          <a
+            href="/"
+            className="flex-shrink-0 flex items-center gap-2 text-2xl font-bold text-blue-600 hover:text-blue-500 transition-colors"
+          >
+            <img
+              src="images/logo.png"
+              alt=""
+              className="w-13 hover:scale-95 transition-transform"
+            />
           </a>
 
           <button
@@ -45,7 +54,7 @@ const Header: React.FC<{ className?: string }> = ({ className = '' }) => {
           </nav>
         </div>
       </div>
-      
+
       {menuOpen && (
         <nav className="lg:hidden absolute top-full left-0 w-full bg-white shadow-lg z-50">
           <div className="flex flex-col p-4 space-y-2">
@@ -67,14 +76,14 @@ const Header: React.FC<{ className?: string }> = ({ className = '' }) => {
 };
 
 function Footer() {
-    return (
-        <footer className="bg-gray-100 text-gray-600 py-8">
-            <div className="container mx-auto px-6 text-center">
-                <p>&copy; {new Date().getFullYear()} AutoPrestige. Tous droits réservés.</p>
-                <p className="text-sm mt-2">Conçu avec passion pour les amateurs de vitesse.</p>
-            </div>
-        </footer>
-    );
+  return (
+    <footer className="bg-gray-100 text-gray-600 py-8">
+      <div className="container mx-auto px-6 text-center">
+        <p>&copy; {new Date().getFullYear()} AutoPrestige. Tous droits réservés.</p>
+        <p className="text-sm mt-2">Conçu avec passion pour les amateurs de vitesse.</p>
+      </div>
+    </footer>
+  );
 }
 
 export default function ContactPage() {
@@ -82,20 +91,23 @@ export default function ContactPage() {
     <div className="flex flex-col min-h-screen bg-white">
       <Header />
 
-      <main className="flex-grow w-full bg-cover bg-center bg-fixed text-gray-900 pt-24"
-        style={{ backgroundImage: "url('images/image2.jpg')" }}>
-        
+      <main
+        className="flex-grow w-full bg-cover bg-center bg-fixed text-gray-900 pt-24"
+        style={{ backgroundImage: "url('images/image2.jpg')" }}
+      >
         <div className="min-h-full w-full flex items-center justify-center p-4 sm:p-6 lg:p-8">
           <motion.div
             className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
+            transition={{ duration: 0.8, ease: 'easeInOut' }}
           >
             {/* Partie Gauche : Infos et Carte */}
             <div className="flex flex-col justify-between p-8 bg-white rounded-2xl shadow-xl border border-gray-200">
               <div>
-                <h2 className="text-4xl lg:text-5xl font-bold mb-3 tracking-wide text-gray-800">Contactez-nous</h2>
+                <h2 className="text-4xl lg:text-5xl font-bold mb-3 tracking-wide text-gray-800">
+                  Contactez-nous
+                </h2>
                 <p className="text-gray-600 mb-10 text-lg">
                   Prêt à prendre la route ? Remplissez le formulaire ou utilisez nos coordonnées.
                 </p>
@@ -104,13 +116,16 @@ export default function ContactPage() {
                   <div className="flex items-center gap-4 group">
                     <MapPin className="text-blue-600 text-2xl flex-shrink-0" />
                     <span className="text-lg text-gray-700 group-hover:text-blue-600 transition-colors">
-                      123 Avenue des Moteurs, 75000 Paris
+                      Route Nationale 1 Complexe Commercial Ain Al Hayat Mag 6 Skhirat, Maroc{' '}
                     </span>
                   </div>
                   <div className="flex items-center gap-4 group">
                     <Mail className="text-blue-600 text-2xl flex-shrink-0" />
-                    <a href="mailto:contact@autoprestige.com" className="text-lg text-gray-700 group-hover:text-blue-600 transition-colors">
-                      contact@autoprestige.com
+                    <a
+                      href="mailto:contact@autoprestige.com"
+                      className="text-lg text-gray-700 group-hover:text-blue-600 transition-colors"
+                    >
+                      nabil.baiz@cais.ma
                     </a>
                   </div>
                 </div>
@@ -120,13 +135,13 @@ export default function ContactPage() {
                   className="mt-10 w-full flex items-center justify-center gap-3 p-4 bg-green-600 rounded-lg font-bold text-lg text-white hover:bg-green-700 active:scale-95 transform transition-all duration-300 ease-in-out shadow-lg shadow-green-500/20"
                 >
                   <Phone />
-                  <span>Appeler maintenant (+33 1 23 45 67 89)</span>
+                  <span>Appeler maintenant (+212 661 064 329)</span>
                 </a>
               </div>
 
               <div className="mt-8 h-64 w-full rounded-lg overflow-hidden border border-gray-300 relative">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3323.349487276128!2d-6.673155!3d33.8031531!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda73d0030f9b3b7%3A0x8812dca37869a039!2sOULED%20AMER%20-%20%D9%88%D9%84%D8%A7%D8%AF%20%D8%B9%D8%A7%D9%85%D8%B1%E2%80%AD!5e0!3m2!1sen!2sma!4v1712345678901!5m2!1sen!2sma"
+                  src="https://www.google.com/maps?q=Route+Nationale+1+Complexe+Commercial+Ain+Al+Hayat+Mag+6+Skhirat+Maroc&output=embed"  // new embed link
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
@@ -161,6 +176,20 @@ export default function ContactPage() {
                 <input
                   type="email"
                   placeholder="Votre adresse e-mail"
+                  required
+                  className="w-full pl-12 p-4 bg-gray-50 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-300 placeholder-gray-400"
+                />
+              </div>
+
+              {/* Numéro de téléphone */}
+              <div className="relative group">
+                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-600 transition-colors duration-300" />
+                <input
+                  type="tel"
+                  placeholder="Votre numéro de téléphone"
+                  required
+                  pattern="[0-9]{8,15}"
+                  inputMode="numeric"
                   className="w-full pl-12 p-4 bg-gray-50 border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-300 placeholder-gray-400"
                 />
               </div>

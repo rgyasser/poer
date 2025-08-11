@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import Header from '@/components/common/Header';
-import { motion, useAnimation } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { motion, useAnimation, AnimatePresence } from 'framer-motion';
+import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // --- Interfaces ---
 interface VehicleSpec {
@@ -35,16 +36,26 @@ interface ColorOption {
   imageSrc: string;
 }
 
-const ShowcasePage: React.FC = () => {
-    const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const [selectedColor, setSelectedColor] = useState<string>('black');
-  const [isMuted, setIsMuted] = useState(true);
+// --- Carousel Image Interface ---
+interface CarouselImage {
+  src: string;
+  alt: string;
+}
 
-  const videoRef = useRef<HTMLVideoElement>(null);
+const ShowcasePage: React.FC = () => {
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [selectedColor, setSelectedColor] = useState<string>('black');
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
+
   const controls = useAnimation();
 
   // --- Données ---
-  const initialSpecsCount = 3; 
+  const initialSpecsCount = 3;
+
+  const carouselImages: CarouselImage[] = [
+    { src: '/images/poer.png', alt: 'Véhicule en couleur noire' },
+    { src: '/images/pneu.jpg', alt: 'Véhicule en couleur blanche' },
+  ];
 
   const technicalSections: TechnicalSectionData[] = [
     {
@@ -68,7 +79,7 @@ const ShowcasePage: React.FC = () => {
           value: '1,9L-Diesel turbo',
         },
         {
-          label: 'Boite a vitesse',
+          label: 'Boîte de vitesse ',
           value: 'Manuelle-6 rapport',
         },
         {
@@ -76,7 +87,7 @@ const ShowcasePage: React.FC = () => {
           value: '2330x1580x480mm',
         },
         {
-          label: 'Nbr de porte',
+          label: 'Nombre de porte ',
           value: '2 portes / 2 sièges',
         },
       ],
@@ -102,7 +113,7 @@ const ShowcasePage: React.FC = () => {
           value: '1,9L-Diesel turbo',
         },
         {
-          label: 'Boite a vitesse',
+          label: 'Boîte de vitesse ',
           value: 'Manuelle-6 rapport',
         },
         {
@@ -110,7 +121,7 @@ const ShowcasePage: React.FC = () => {
           value: '1520x1520x540mm',
         },
         {
-          label: 'Nbr de porte',
+          label: 'Nombre de porte',
           value: '4 portes / 5 sièges',
         },
       ],
@@ -128,11 +139,11 @@ const ShowcasePage: React.FC = () => {
         },
         {
           image: '/images/image1.png',
-          description: 'Couple élevé disponible à bas régime pour une traction optimale.',
+          description: "Charge utile 1-3 T et traction jusqu'à 3 T",
         },
         {
           image: '/images/motor.png',
-          description: 'Fiabilité prouvée pour les professionnels les plus exigeants.',
+          description: '163 chevaux prêts à relever tous les défis, jour après jour.',
         },
       ],
     },
@@ -143,7 +154,7 @@ const ShowcasePage: React.FC = () => {
         {
           image: '/images/pneu2.png',
           description:
-            'Traction Control System Evite le patinage des roues et avance meme dans la boue.',
+            'Traction Control System. Evite le patinage des roues et avance meme dans la boue',
         },
         {
           image: '/images/pneu3.png',
@@ -159,11 +170,11 @@ const ShowcasePage: React.FC = () => {
         { image: '/images/inter0.png', description: 'sièges et volant multifonction en cuir' },
         {
           image: '/images/inter3.png',
-          description: 'sièges réglables pour un maintien personnalisé toute la journée.',
+          description: 'sièges réglables pour un maintien personnalisé toute la journée',
         },
         {
           image: '/images/inter4.png',
-          description: 'Confort pensé pour les professionnels avec cabine spacieuse',
+          description: 'Confort pensé pour les professionnels avec cabine spacieuse.',
         },
       ],
     },
@@ -173,7 +184,7 @@ const ShowcasePage: React.FC = () => {
       items: [
         {
           image: '/images/vision7.png',
-          description: 'Systeme de vision offre une visibilite optimale autour de vehicule.',
+          description: 'Système de vision offre une visibilite optimale autour de véhicule.',
         },
         {
           image: '/images/vision9.png',
@@ -191,15 +202,15 @@ const ShowcasePage: React.FC = () => {
       items: [
         {
           image: '/images/vision3.png',
-          description: 'Systeme de vision offre une visibilite optimale autour de vehicule.',
+          description: 'Evite le risque de retournement Sécurité sur pentes',
         },
         {
           image: '/images/vision1.png',
-          description: 'Simplifie les déplacements en espaces restreints, évite les collisions.',
+          description: 'Empeche les roues de bloquer au freinage /controle même sur sol glissant.',
         },
         {
           image: '/images/vision8.png',
-          description: 'corrige la trajectoire (stabilite en virage ou en cas de derapage).',
+          description: 'Corrige la trajectoire (stabilité en virage ou en cas de dérapage).',
         },
       ],
     },
@@ -215,29 +226,22 @@ const ShowcasePage: React.FC = () => {
 
   const activeColor = colorOptions.find((c) => c.id === selectedColor) || colorOptions[0];
 
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev === carouselImages.length - 1 ? 0 : prev + 1));
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev === 0 ? carouselImages.length - 1 : prev - 1));
+  };
+
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsMuted(!entry.isIntersecting);
-      },
-      {
-        threshold: 0.5,
-      }
-    );
-    const currentVideoRef = videoRef.current;
-    if (currentVideoRef) {
-      observer.observe(currentVideoRef);
-    }
-    return () => {
-      if (currentVideoRef) {
-        observer.unobserve(currentVideoRef);
-      }
-    };
+    const slideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+    return () => clearInterval(slideInterval);
   }, []);
 
   // Toggle expansion for all cards simultaneously
   const toggleExpanded = () => {
-    setIsExpanded(prev => !prev);
+    setIsExpanded((prev) => !prev);
   };
 
   return (
@@ -245,38 +249,89 @@ const ShowcasePage: React.FC = () => {
       <Header />
 
       <main className="w-full">
-        {/* Hero Section */}
+        {/* Hero Section with Carousel */}
         <section className="relative w-full h-screen overflow-hidden">
-          <video
-            ref={videoRef}
-            src="/images/vedio.mp4"
-            autoPlay
-            loop
-            muted={isMuted}
-            playsInline
-            className="w-full h-full object-cover"
-          >
-            Votre navigateur ne supporte pas la lecture de vidéos.
-          </video>
-          <div className="absolute inset-0 bg-black/30"></div>
-          <motion.button
-            onClick={() => {
-              controls.start({ y: [0, 10, 0], transition: { duration: 0.5 } });
-              document.getElementById('fiche-technique')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20"
-            aria-label="Faire défiler vers le bas"
-            animate={controls}
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.9 }}
-          >
+          <AnimatePresence>
             <motion.div
-              animate={{ y: [0, 5, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+              key={currentSlide}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.0 }}
+              className="w-full h-full"
             >
-              <ChevronDown className="w-10 h-10 text-white" />
+              <Image
+                src={carouselImages[currentSlide].src}
+                alt={carouselImages[currentSlide].alt}
+                fill
+                className="object-cover"
+                priority={true}
+              />
             </motion.div>
-          </motion.button>
+          </AnimatePresence>
+          <div className="absolute inset-0 bg-black/40"></div>
+
+          {/* Call to Action Content */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 p-4">
+            <motion.h1
+              className="text-4xl md:text-6xl font-bold text-white mb-4 text-shadow-lg"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              Le nouveau Pick-up Poer
+            </motion.h1>
+            <motion.p
+              className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl text-shadow"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              Puissance, fiabilité et confort réunis pour tous vos défis professionnels.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              <Link
+                href="/contact"
+                className="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors duration-300 shadow-lg"
+              >
+                Contactez-nous
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Carousel Controls */}
+          <button
+            onClick={prevSlide}
+            className="absolute top-1/2 left-4 transform -translate-y-1/2 z-20 text-white p-2 rounded-full bg-black/40 hover:bg-black/60 transition-colors"
+            aria-label="Previous Slide"
+          >
+            <ChevronLeft className="w-8 h-8" />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute top-1/2 right-4 transform -translate-y-1/2 z-20 text-white p-2 rounded-full bg-black/40 hover:bg-black/60 transition-colors"
+            aria-label="Next Slide"
+          >
+            <ChevronRight className="w-8 h-8" />
+          </button>
+
+          {/* Carousel Dots */}
+          <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 flex space-x-3">
+            {carouselImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`w-3 h-3 rounded-full transition-colors ${
+                  currentSlide === index ? 'bg-white' : 'bg-white/50 hover:bg-white/75'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
         </section>
 
         {/* Technical Specifications */}
@@ -313,7 +368,6 @@ const ShowcasePage: React.FC = () => {
                       </div>
                     ))}
 
-                    {/* MODIFICATION 3 : On vérifie l'état de la carte spécifique (isExpanded[sectionIndex]) */}
                     {isExpanded &&
                       section.specs.slice(initialSpecsCount).map((spec, specIndex) => (
                         <div
@@ -333,11 +387,9 @@ const ShowcasePage: React.FC = () => {
                     {section.specs.length > initialSpecsCount && (
                       <div className="text-center pt-3 mt-auto">
                         <button
-                          // MODIFICATION 4 : On appelle la nouvelle fonction avec l'index de la carte
                           onClick={toggleExpanded}
                           className="font-semibold text-stone-700 hover:text-stone-900 transition-colors duration-200 flex items-center justify-center mx-auto"
                         >
-                          {/* MODIFICATION 5 : On vérifie l'état de la carte spécifique pour le texte du bouton */}
                           {isExpanded ? (
                             <>
                               <span>Lire moins</span>
