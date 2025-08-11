@@ -13,7 +13,6 @@ interface VehicleSpec {
   description?: string;
 }
 
-// MODIFICATION: Interface pour la nouvelle structure de données
 interface TechnicalSectionData {
   imageSrc: string;
   alt: string;
@@ -37,7 +36,8 @@ interface ColorOption {
 }
 
 const ShowcasePage: React.FC = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  // MODIFICATION 1 : L'état `isExpanded` est maintenant un objet pour gérer chaque carte.
+  const [isExpanded, setIsExpanded] = useState<Record<number, boolean>>({});
   const [selectedColor, setSelectedColor] = useState<string>('black');
   const [isMuted, setIsMuted] = useState(true);
 
@@ -45,9 +45,8 @@ const ShowcasePage: React.FC = () => {
   const controls = useAnimation();
 
   // --- Données ---
-  const initialSpecsCount = 3; // On peut ajuster combien on en montre par défaut
+  const initialSpecsCount = 3; 
 
-  // MODIFICATION: Création de la structure de données pour les sections techniques uniques
   const technicalSections: TechnicalSectionData[] = [
     {
       imageSrc: '/images/cabsim.png',
@@ -237,6 +236,14 @@ const ShowcasePage: React.FC = () => {
     };
   }, []);
 
+  // MODIFICATION 2 : La fonction qui gère le clic pour une carte spécifique.
+  const toggleExpanded = (index: number) => {
+    setIsExpanded(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
   return (
     <div className="w-full bg-stone-50">
       <Header />
@@ -285,7 +292,6 @@ const ShowcasePage: React.FC = () => {
               </h2>
               <div className="w-16 h-0.5 bg-stone-300 mx-auto mt-4" />
             </div>
-            {/* MODIFICATION: On boucle sur `technicalSections` pour créer les cartes */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {technicalSections.map((section, sectionIndex) => (
                 <div
@@ -296,7 +302,6 @@ const ShowcasePage: React.FC = () => {
                     <Image src={section.imageSrc} alt={section.alt} fill className="object-cover" />
                   </div>
                   <div className="space-y-4 flex-grow flex flex-col">
-                    {/* On utilise la liste de specs de la section en cours: section.specs */}
                     {section.specs.slice(0, initialSpecsCount).map((spec, specIndex) => (
                       <div
                         key={`section${sectionIndex}-initial-${specIndex}`}
@@ -312,7 +317,8 @@ const ShowcasePage: React.FC = () => {
                       </div>
                     ))}
 
-                    {isExpanded &&
+                    {/* MODIFICATION 3 : On vérifie l'état de la carte spécifique (isExpanded[sectionIndex]) */}
+                    {isExpanded[sectionIndex] &&
                       section.specs.slice(initialSpecsCount).map((spec, specIndex) => (
                         <div
                           key={`section${sectionIndex}-expanded-${specIndex}`}
@@ -331,10 +337,12 @@ const ShowcasePage: React.FC = () => {
                     {section.specs.length > initialSpecsCount && (
                       <div className="text-center pt-3 mt-auto">
                         <button
-                          onClick={() => setIsExpanded(!isExpanded)}
+                          // MODIFICATION 4 : On appelle la nouvelle fonction avec l'index de la carte
+                          onClick={() => toggleExpanded(sectionIndex)}
                           className="font-semibold text-stone-700 hover:text-stone-900 transition-colors duration-200 flex items-center justify-center mx-auto"
                         >
-                          {isExpanded ? (
+                          {/* MODIFICATION 5 : On vérifie l'état de la carte spécifique pour le texte du bouton */}
+                          {isExpanded[sectionIndex] ? (
                             <>
                               <span>Lire moins</span>
                               <svg

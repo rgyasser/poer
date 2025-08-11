@@ -7,6 +7,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { User, Mail, Menu, X, Car, Wrench, ScanSearch, PaintRoller, Puzzle, ConciergeBell, ShieldCheck } from 'lucide-react';
 
 // --- Composants réutilisés : Header et Footer (à importer depuis vos fichiers) ---
@@ -98,7 +99,7 @@ export default function SAVPage() {
         }
     ];
 
-    const cardVariants = {
+    const cardVariants: Variants = {
         offscreen: {
             y: 50,
             opacity: 0
@@ -107,7 +108,7 @@ export default function SAVPage() {
             y: 0,
             opacity: 1,
             transition: {
-                type: "spring",
+                type: "spring" as const,
                 bounce: 0.4,
                 duration: 0.8
             }
