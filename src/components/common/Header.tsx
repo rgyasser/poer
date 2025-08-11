@@ -19,10 +19,10 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
   return (
     <header className={`w-full bg-white backdrop-blur-sm text-gray-900 fixed top-0 left-0 right-0 z-50 shadow-md ${className}`}>
       <div className="container mx-auto px-6">
-        <div className="flex justify-between items-center h-20">
+        <div className="flex justify-between items-center h-16">  {/* was h-20 */}
           {/* Logo */}
           <a href="/" className="flex-shrink-0 flex items-center gap-2 text-2xl font-bold text-blue-600 hover:text-blue-500 transition-colors">
-            <img src="images/logo.png" alt="" className='w-15 hover:scale-95 transition-transform'/>
+            <img src="images/logo.png" alt="" className='w-15 hover:scale-95 transition-transform'/> {/* was w-15 */}
           </a>
 
           {/* Hamburger Menu Icon (Mobile only) */}

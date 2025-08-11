@@ -36,8 +36,7 @@ interface ColorOption {
 }
 
 const ShowcasePage: React.FC = () => {
-  // MODIFICATION 1 : L'état `isExpanded` est maintenant un objet pour gérer chaque carte.
-  const [isExpanded, setIsExpanded] = useState<Record<number, boolean>>({});
+    const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [selectedColor, setSelectedColor] = useState<string>('black');
   const [isMuted, setIsMuted] = useState(true);
 
@@ -236,12 +235,9 @@ const ShowcasePage: React.FC = () => {
     };
   }, []);
 
-  // MODIFICATION 2 : La fonction qui gère le clic pour une carte spécifique.
-  const toggleExpanded = (index: number) => {
-    setIsExpanded(prev => ({
-      ...prev,
-      [index]: !prev[index]
-    }));
+  // Toggle expansion for all cards simultaneously
+  const toggleExpanded = () => {
+    setIsExpanded(prev => !prev);
   };
 
   return (
@@ -318,7 +314,7 @@ const ShowcasePage: React.FC = () => {
                     ))}
 
                     {/* MODIFICATION 3 : On vérifie l'état de la carte spécifique (isExpanded[sectionIndex]) */}
-                    {isExpanded[sectionIndex] &&
+                    {isExpanded &&
                       section.specs.slice(initialSpecsCount).map((spec, specIndex) => (
                         <div
                           key={`section${sectionIndex}-expanded-${specIndex}`}
@@ -338,11 +334,11 @@ const ShowcasePage: React.FC = () => {
                       <div className="text-center pt-3 mt-auto">
                         <button
                           // MODIFICATION 4 : On appelle la nouvelle fonction avec l'index de la carte
-                          onClick={() => toggleExpanded(sectionIndex)}
+                          onClick={toggleExpanded}
                           className="font-semibold text-stone-700 hover:text-stone-900 transition-colors duration-200 flex items-center justify-center mx-auto"
                         >
                           {/* MODIFICATION 5 : On vérifie l'état de la carte spécifique pour le texte du bouton */}
-                          {isExpanded[sectionIndex] ? (
+                          {isExpanded ? (
                             <>
                               <span>Lire moins</span>
                               <svg
