@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Header from '@/components/common/Header';
-import Footer from '@/components/common/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -45,7 +44,7 @@ const GalleryPage: React.FC = () => {
   const handlePrev = () => {
     if (selectedImageIndex !== null) {
       setSelectedImageIndex(
-        (prevIndex) => (prevIndex! - 1 + galleryImages.length) % galleryImages.length,
+        (prevIndex) => (prevIndex! - 1 + galleryImages.length) % galleryImages.length
       );
     }
   };
@@ -78,8 +77,8 @@ const GalleryPage: React.FC = () => {
           <div className="w-24 h-1 bg-stone-300 mx-auto mt-6" />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {galleryImages.map((image, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {galleryImages.map((image, index) => (
             <motion.div
               key={index}
               className="group relative w-full h-64 rounded-lg overflow-hidden shadow-lg cursor-pointer"
@@ -154,8 +153,6 @@ const GalleryPage: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
-
-      <Footer />
     </div>
   );
 };

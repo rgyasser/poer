@@ -13,7 +13,8 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
     { label: 'Accueil', href: '/' },
     { label: 'Galerie', href: '/galerie' },
     { label: 'Devis', href: '/devis' },
-    { label: 'SAV', href: '/sav' },
+    { label: 'Service Après-Vente', href: '/sav' },
+
     { href: '/contact', label: 'Contact' },
   ];
 
