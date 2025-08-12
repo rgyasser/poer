@@ -1,12 +1,9 @@
-// Pour utiliser les nouvelles icônes, vous devez d'abord installer les bibliothèques :
-// npm install lucide-react framer-motion
-// ou
-// yarn add lucide-react framer-motion
-
 'use client';
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import Header from '@/components/common/Header';
+import Footer from '@/components/common/Footer';
 import type { Variants } from 'framer-motion';
 import {
   User,
@@ -22,87 +19,7 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 
-// --- Composants réutilisés : Header et Footer (à importer depuis vos fichiers) ---
-// Note : J'utilise la version claire du Header/Footer que vous avez fournie précédemment.
 
-const Header: React.FC<{ className?: string }> = ({ className = '' }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuItems = [
-    { label: 'Accueil', href: '/' },
-    { label: 'Devis', href: '/devis' },
-    { label: 'SAV', href: '/sav' },
-    { href: '/contact', label: 'Contact' },
-  ];
-  return (
-    <header
-      className={`w-full bg-white/90 backdrop-blur-sm text-gray-900 fixed top-0 left-0 right-0 z-50 shadow-md ${className}`}
-    >
-      <div className="container mx-auto px-6">
-        <div className="flex justify-between items-center h-20">
-          <a
-            href="/"
-            className="flex-shrink-0 flex items-center gap-2 text-2xl font-bold text-blue-600 hover:text-blue-500 transition-colors"
-          >
-            <img
-              src="images/logo.png"
-              alt=""
-              className="w-13 hover:scale-95 transition-transform"
-            />
-          </a>
-          <button
-            className="block lg:hidden p-2 text-gray-700 focus:outline-none"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            {menuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-          <nav className="hidden lg:flex items-center">
-            <div className="flex gap-8">
-              {menuItems.map((item, index) => (
-                <a
-                  key={index}
-                  href={item.href}
-                  className="relative group font-medium text-gray-700 hover:text-blue-600 transition-colors duration-300"
-                >
-                  {item.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-                </a>
-              ))}
-            </div>
-          </nav>
-        </div>
-      </div>
-      {menuOpen && (
-        <nav className="lg:hidden absolute top-full left-0 w-full bg-white shadow-lg z-50">
-          <div className="flex flex-col p-4 space-y-2">
-            {menuItems.map((item, index) => (
-              <a
-                key={index}
-                href={item.href}
-                className="text-lg text-gray-700 text-left py-3 px-4 rounded-md hover:bg-gray-100 transition-colors duration-200"
-                onClick={() => setMenuOpen(false)}
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
-        </nav>
-      )}
-    </header>
-  );
-};
-
-const Footer: React.FC = () => {
-  return (
-    <footer className="bg-gray-100 text-gray-600 py-8">
-      <div className="container mx-auto px-6 text-center">
-        <p>&copy; {new Date().getFullYear()} AutoPrestige. Tous droits réservés.</p>
-        <p className="text-sm mt-2">L'excellence, à chaque kilomètre.</p>
-      </div>
-    </footer>
-  );
-};
-
-// --- Composant principal de la page SAV ---
 export default function SAVPage() {
   const services = [
     {
@@ -231,7 +148,6 @@ export default function SAVPage() {
         </div>
       </main>
 
-      <Footer />
     </div>
   );
 }
