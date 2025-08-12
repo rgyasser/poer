@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import Header from '@/components/common/Header';
+import Footer from '@/components/common/Footer';
+
 import { motion } from 'framer-motion';
 import {
   Car,
@@ -14,14 +16,6 @@ import {
   GaugeCircle,
   Gem,
 } from 'lucide-react';
-
-const Footer: React.FC = () => (
-  <footer className="bg-gray-100 text-gray-600 py-8">
-    <div className="container mx-auto px-6 text-center">
-      <p>&copy; {new Date().getFullYear()} AutoPrestige. Tous droits réservés.</p>
-    </div>
-  </footer>
-);
 
 export default function DevisPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -74,7 +68,6 @@ export default function DevisPage() {
             </button>
           </motion.div>
         </main>
-        <Footer />
       </div>
     );
   }
@@ -178,7 +171,6 @@ export default function DevisPage() {
           </motion.div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 }

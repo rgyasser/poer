@@ -3,88 +3,8 @@
 import React, { useState } from 'react';
 import { User, Mail, MessageSquare, Send, MapPin, Phone, Menu, X, Car } from 'lucide-react';
 import { motion } from 'framer-motion';
-
-const Header: React.FC<{ className?: string }> = ({ className = '' }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const menuItems = [
-    { label: 'Accueil', href: '/' },
-    { label: 'Devis', href: '/devis' },
-    { label: 'SAV', href: '/sav' },
-    { href: '/contact', label: 'Contact' },
-  ];
-
-  return (
-    <header
-      className={`w-full bg-white backdrop-blur-sm text-gray-900 fixed top-0 left-0 right-0 z-50 shadow-md ${className}`}
-    >
-      <div className="container mx-auto px-6">
-        <div className="flex justify-between items-center h-20">
-          <a
-            href="/"
-            className="flex-shrink-0 flex items-center gap-2 text-2xl font-bold text-blue-600 hover:text-blue-500 transition-colors"
-          >
-            <img
-              src="images/logo.png"
-              alt=""
-              className="w-13 hover:scale-95 transition-transform"
-            />
-          </a>
-
-          <button
-            className="block lg:hidden p-2 text-gray-700 focus:outline-none"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            {menuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-
-          <nav className="hidden lg:flex items-center">
-            <div className="flex gap-8">
-              {menuItems.map((item, index) => (
-                <a
-                  key={index}
-                  href={item.href}
-                  className="relative group font-medium text-gray-700 hover:text-blue-600 transition-colors duration-300"
-                >
-                  {item.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-                </a>
-              ))}
-            </div>
-          </nav>
-        </div>
-      </div>
-
-      {menuOpen && (
-        <nav className="lg:hidden absolute top-full left-0 w-full bg-white shadow-lg z-50">
-          <div className="flex flex-col p-4 space-y-2">
-            {menuItems.map((item, index) => (
-              <a
-                key={index}
-                href={item.href}
-                className="text-lg text-gray-700 text-left py-3 px-4 rounded-md hover:bg-gray-100 transition-colors duration-200"
-                onClick={() => setMenuOpen(false)}
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
-        </nav>
-      )}
-    </header>
-  );
-};
-
-function Footer() {
-  return (
-    <footer className="bg-gray-100 text-gray-600 py-8">
-      <div className="container mx-auto px-6 text-center">
-        <p>&copy; {new Date().getFullYear()} AutoPrestige. Tous droits réservés.</p>
-        <p className="text-sm mt-2">Conçu avec passion pour les amateurs de vitesse.</p>
-      </div>
-    </footer>
-  );
-}
+import Header from '@/components/common/Header';
+import Footer from '@/components/common/Footer';
 
 export default function ContactPage() {
   return (
@@ -141,7 +61,7 @@ export default function ContactPage() {
 
               <div className="mt-8 h-64 w-full rounded-lg overflow-hidden border border-gray-300 relative">
                 <iframe
-                  src="https://www.google.com/maps?q=Route+Nationale+1+Complexe+Commercial+Ain+Al+Hayat+Mag+6+Skhirat+Maroc&output=embed"  // new embed link
+                  src="https://www.google.com/maps?q=Route+Nationale+1+Complexe+Commercial+Ain+Al+Hayat+Mag+6+Skhirat+Maroc&output=embed" // new embed link
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
@@ -215,7 +135,6 @@ export default function ContactPage() {
         </div>
       </main>
 
-      {/* <Footer /> */}
     </div>
   );
 }

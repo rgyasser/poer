@@ -57,8 +57,8 @@ const ShowcasePage: React.FC = () => {
   ];
 
   const mobileImages: CarouselImage[] = [
-    { src: '/images/poermobile.png', alt: 'Mobile Image 1' },
-    { src: '/images/poermobile2.png', alt: 'Mobile Image 2' },
+    { src: '/images/poermobile1.png', alt: 'Mobile Image 1' },
+    { src: '/images/poermobile22.png', alt: 'Mobile Image 2' },
   ];
 
   // --- Données ---
@@ -303,14 +303,14 @@ const ShowcasePage: React.FC = () => {
           <div className="absolute inset-0 bg-black/40"></div>
 
           {/* Call to Action Content */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 p-4">
+          {/* <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 p-4">
             <Link
               href="/contact"
               className="bg-black/20 backdrop-blur-sm border border-white/75 text-white font-bold py-2 px-6 rounded-lg text-base hover:bg-white hover:text-blue-600 transition-colors duration-300"
             >
               Contactez-nous
             </Link>
-          </div>
+          </div> */}
 
           {/* Carousel Controls */}
           <button
