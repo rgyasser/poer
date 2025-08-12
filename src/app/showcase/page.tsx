@@ -46,22 +46,33 @@ const ShowcasePage: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [selectedColor, setSelectedColor] = useState<string>('black');
   const [currentSlide, setCurrentSlide] = useState<number>(0);
+  const [carouselImages, setCarouselImages] = useState<CarouselImage[]>([]);
 
   const controls = useAnimation();
 
+  // --- Image Data ---
+  const desktopImages: CarouselImage[] = [
+    { src: '/images/poer00.png', alt: 'Desktop Image 1' },
+    { src: '/images/poer11.png', alt: 'Desktop Image 2' },
+  ];
+
+  const mobileImages: CarouselImage[] = [
+    { src: '/images/poermobile.png', alt: 'Mobile Image 1' },
+    { src: '/images/poermobile2.png', alt: 'Mobile Image 2' },
+  ];
+
   // --- Données ---
   const initialSpecsCount = 3;
-
-  const carouselImages: CarouselImage[] = [
-    { src: '/images/poer.png', alt: 'Véhicule en couleur noire' },
-    { src: '/images/pneu.jpg', alt: 'Véhicule en couleur blanche' },
-  ];
 
   const technicalSections: TechnicalSectionData[] = [
     {
       imageSrc: '/images/cabsim.png',
       alt: 'Caractéristiques du moteur et de la performance',
       specs: [
+        {
+          label: 'Nom',
+          value: 'Elite Simple Cabine',
+        },
         {
           label: 'Transmission',
           value: '4x2',
@@ -96,6 +107,10 @@ const ShowcasePage: React.FC = () => {
       imageSrc: '/images/cabdou.png',
       alt: 'Caractéristiques de la cabine et de la carrosserie',
       specs: [
+        {
+          label: 'Nom',
+          value: 'Pilot Double Cabine',
+        },
         {
           label: 'Transmission',
           value: '4x4',
@@ -138,7 +153,7 @@ const ShowcasePage: React.FC = () => {
           description: 'Moteur puissant, taillé pour affronter les conditions les plus extrêmes.',
         },
         {
-          image: '/images/image1.png',
+          image: '/images/pneu.png',
           description: "Charge utile 1-3 T et traction jusqu'à 3 T",
         },
         {
@@ -152,19 +167,19 @@ const ShowcasePage: React.FC = () => {
       subtitle: 'Des pneus surélevés pour dominer tous les terrains.',
       items: [
         {
-          image: '/images/pneu2.png',
+          image: '/images/pneu22.png',
           description:
-            'Traction Control System. Evite le patinage des roues et avance meme dans la boue',
+            'Traction Control System. Evite le patinage des roues et avance même dans la boue',
         },
         {
           image: '/images/pneu3.png',
           description:
-            "Grace a sa garde au sol eleve, capable d'affronter tout types de chantiers.",
+            "Grâce à sa garde au sol élevée, il est capable d'affronter tous types de chantiers.",
         },
       ],
     },
     {
-      title: 'Siege',
+      title: 'Siège',
       subtitle: 'Confort pensé pour tenir tous les trajets.',
       items: [
         { image: '/images/inter0.png', description: 'sièges et volant multifonction en cuir' },
@@ -179,12 +194,12 @@ const ShowcasePage: React.FC = () => {
       ],
     },
     {
-      title: 'Systeme de vision',
+      title: 'Système  de vision',
       subtitle: 'Une vue complète, zéro angle mort.',
       items: [
         {
           image: '/images/vision7.png',
-          description: 'Système de vision offre une visibilite optimale autour de véhicule.',
+          description: 'Le système de vision offre une visibilité optimale autour du véhicule.',
         },
         {
           image: '/images/vision9.png',
@@ -197,16 +212,16 @@ const ShowcasePage: React.FC = () => {
       ],
     },
     {
-      title: 'Securite',
+      title: 'Sécurité',
       subtitle: 'Contrôle total, protection maximale.',
       items: [
         {
           image: '/images/vision3.png',
-          description: 'Evite le risque de retournement Sécurité sur pentes',
+          description: 'Évite le risque de retournement. Sécurité sur pentes.',
         },
         {
           image: '/images/vision1.png',
-          description: 'Empeche les roues de bloquer au freinage /controle même sur sol glissant.',
+          description: 'Empêche les roues de bloquer au freinage/contrôle même sur sol glissant.',
         },
         {
           image: '/images/vision8.png',
@@ -235,9 +250,23 @@ const ShowcasePage: React.FC = () => {
   };
 
   useEffect(() => {
-    const slideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
-    return () => clearInterval(slideInterval);
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 768; // Example breakpoint for mobile
+      setCarouselImages(isMobile ? mobileImages : desktopImages);
+    };
+
+    handleResize(); // Set initial images on component mount
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  useEffect(() => {
+    if (carouselImages.length > 0) {
+      const slideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+      return () => clearInterval(slideInterval);
+    }
+  }, [carouselImages, currentSlide]); // Rerun effect if images change
 
   // Toggle expansion for all cards simultaneously
   const toggleExpanded = () => {
@@ -250,57 +279,37 @@ const ShowcasePage: React.FC = () => {
 
       <main className="w-full">
         {/* Hero Section with Carousel */}
-        <section className="relative w-full h-screen overflow-hidden">
+        <section className="relative w-full h-[95vh] overflow-hidden">
           <AnimatePresence>
-            <motion.div
-              key={currentSlide}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1.0 }}
-              className="w-full h-full"
-            >
-              <Image
-                src={carouselImages[currentSlide].src}
-                alt={carouselImages[currentSlide].alt}
-                fill
-                className="object-cover"
-                priority={true}
-              />
-            </motion.div>
+            {carouselImages.length > 0 && (
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1.0 }}
+                className="w-full h-full"
+              >
+                <Image
+                  src={carouselImages[currentSlide].src}
+                  alt={carouselImages[currentSlide].alt}
+                  fill
+                  className="object-cover"
+                  priority={true}
+                />
+              </motion.div>
+            )}
           </AnimatePresence>
           <div className="absolute inset-0 bg-black/40"></div>
 
-          {/* Call to Action Content */}
+          {/* Call to Action Content - MODIFIED */}
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 p-4">
-            <motion.h1
-              className="text-4xl md:text-6xl font-bold text-white mb-4 text-shadow-lg"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+            <Link
+              href="/contact"
+              className="bg-transparent border-2 border-white text-white font-bold py-2 px-6 rounded-lg text-base hover:bg-white hover:text-blue-600 transition-colors duration-300"
             >
-              Le nouveau Pick-up Poer
-            </motion.h1>
-            <motion.p
-              className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl text-shadow"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              Puissance, fiabilité et confort réunis pour tous vos défis professionnels.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
-              <Link
-                href="/contact"
-                className="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-blue-700 transition-colors duration-300 shadow-lg"
-              >
-                Contactez-nous
-              </Link>
-            </motion.div>
+              Contactez-nous
+            </Link>
           </div>
 
           {/* Carousel Controls */}
@@ -318,24 +327,10 @@ const ShowcasePage: React.FC = () => {
           >
             <ChevronRight className="w-8 h-8" />
           </button>
-
-          {/* Carousel Dots */}
-          <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 flex space-x-3">
-            {carouselImages.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`w-3 h-3 rounded-full transition-colors ${
-                  currentSlide === index ? 'bg-white' : 'bg-white/50 hover:bg-white/75'
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
         </section>
 
         {/* Technical Specifications */}
-        <section id="fiche-technique" className="py-10 md:py-14 bg-white">
+        <section id="fiche-technique" className="py-3 md:py-3 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
               <h2 className="text-2xl md:text-4xl font-bold text-stone-900 mb-2">
