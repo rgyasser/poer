@@ -30,28 +30,6 @@ const Footer: React.FC = () => {
             </div>
             <div className="flex space-x-4">{/* Add social media links here */}</div>
           </div>
-
-          {/* Links */}
-          <div>
-            <h3 className="text-lg font-semibold">Véhicules</h3>
-            <ul className="mt-4 space-y-2">
-              <li>
-                <Link href="/showcase" className="text-gray-600 hover:text-gray-900">
-                  D-Max Pick-up
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-gray-600 hover:text-gray-900">
-                  Série N
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-gray-600 hover:text-gray-900">
-                  Série F
-                </Link>
-              </li>
-            </ul>
-          </div>
           <div>
             <h3 className="text-lg font-semibold">Services</h3>
             <ul className="mt-4 space-y-2">
@@ -97,21 +75,45 @@ const Footer: React.FC = () => {
               </li>
             </ul>
           </div>
+          <div>
+            <h3 className="text-lg font-semibold">Lien</h3>
+            <ul className="mt-4 space-y-2">
+              <li>
+                <Link href="/" className="text-gray-600 hover:text-gray-900">
+                  Accueil
+                </Link>
+              </li>
+              <li>
+                <Link href="/galerie" className="text-gray-600 hover:text-gray-900">
+                  Gallerie
+                </Link>
+              </li>
+              <li>
+                <Link href="/devis" className="text-gray-600 hover:text-gray-900">
+                  Devis
+                </Link>
+              </li>
+              <li>
+                <Link href="/sav" className="text-gray-600 hover:text-gray-900">
+                  Service Après-Vente
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-gray-600 hover:text-gray-900">
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <div className="bg-stone-200 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between text-gray-600">
           <p>&copy; {new Date().getFullYear()} Poer Maroc. Tous droits réservés.</p>
           <div className="flex space-x-4">
-            <Link href="#" className="hover:text-gray-900">
-              Mentions légales
-            </Link>
-            <Link href="#" className="hover:text-gray-900">
-              Politique de confidentialité
-            </Link>
-            <Link href="#" className="hover:text-gray-900">
-              CGV
-            </Link>
+            <h2>Mentions légales</h2>
+            <h2>Politique de confidentialité</h2>
+            <h2>CGV </h2>
           </div>
         </div>
       </div>
