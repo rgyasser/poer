@@ -11,6 +11,7 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
 
   const menuItems = [
     { label: 'Accueil', href: '/' },
+    { label: 'Galerie', href: '/galerie' },
     { label: 'Devis', href: '/devis' },
     { label: 'SAV', href: '/sav' },
     { href: '/contact', label: 'Contact' },
