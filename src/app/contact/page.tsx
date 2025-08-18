@@ -122,32 +122,33 @@ export default function ContactPage() {
                   <div className="flex items-center gap-4 group">
                     <MapPin className="text-blue-600 text-2xl flex-shrink-0" />
                     <span className="text-lg text-gray-700 group-hover:text-blue-600 transition-colors">
-                      Route Nationale 1 Complexe Commercial Ain Al Hayat Mag 6 Skhirat, Maroc{' '}
+                      RPN nº 1, Mag 6, Complexe Commercial Aïn Al Hayat, Skhirat 12050{' '}
                     </span>
                   </div>
                   <div className="flex items-center gap-4 group">
                     <Mail className="text-blue-600 text-2xl flex-shrink-0" />
                     <a
-                      href="mailto:contact@autoprestige.com"
+                      href="mailto:Contact@cais.ma"
                       className="text-lg text-gray-700 group-hover:text-blue-600 transition-colors"
                     >
-                      nabil.baiz@cais.ma
+                    Contact@cais.ma
                     </a>
                   </div>
                 </div>
 
                 <a
-                  href="tel:+212661064329"
+                  href="tel:+212⁠661387815"
                   className="mt-10 w-full flex items-center justify-center gap-3 p-4 bg-green-600 rounded-lg font-bold text-lg text-white hover:bg-green-700 active:scale-95 transform transition-all duration-300 ease-in-out shadow-lg shadow-green-500/20"
                 >
                   <Phone />
-                  <span>Appeler maintenant (+212 661 064 329)</span>
+                  <span>Appeler maintenant (+212 ⁠661 387 815)</span>
                 </a>
               </div>
 
               <div className="mt-8 h-64 w-full rounded-lg overflow-hidden border border-gray-300 relative">
                 <iframe
-                  src="https://www.google.com/maps?q=Route+Nationale+1+Complexe+Commercial+Ain+Al+Hayat+Mag+6+Skhirat+Maroc&output=embed"
+                  src="https://www.google.com/maps?q=Comptoir+Agricole+et+Industriel+de+Skhirat%2C%20RPN%20N%C2%BA%201%2C%20Mag%206%2C%20Complexe%20Commercial%20A%C3%AFn%20Al%20Hayat%2C%20Skhirat%2012050&hl=fr&z=16&output=embed
+"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
@@ -158,7 +159,7 @@ export default function ContactPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent pointer-events-none flex items-end p-4">
                   <div className="flex items-center gap-2 bg-white/90 px-3 py-2 rounded-lg border border-gray-200">
                     <MapPin className="text-blue-600 h-5 w-5" />
-                    <span className="text-gray-800 text-sm font-medium">Poer</span>
+                    <span className="text-gray-800 text-sm font-medium">GWM Poer</span>
                   </div>
                 </div>
               </div>

@@ -19,10 +19,10 @@ const Footer: React.FC = () => {
             </p>
             <div className="space-y-2">
               <p className="flex items-center text-gray-600">
-                <Phone className="w-4 h-4 mr-2" /> +212 (0) 661 064 329
+                <Phone className="w-4 h-4 mr-2" /> +212 (0) ⁠661 387 815
               </p>
               <p className="flex items-center text-gray-600">
-                <Mail className="w-4 h-4 mr-2" /> nabil.baiz@cais.ma
+                <Mail className="w-4 h-4 mr-2" />  Contact@cais.ma
               </p>
               <p className="flex items-center text-gray-600">
                 <MapPin className="w-4 h-4 mr-2" /> Skhirat, Maroc
