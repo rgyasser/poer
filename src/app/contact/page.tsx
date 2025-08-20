@@ -137,18 +137,17 @@ export default function ContactPage() {
                 </div>
 
                 <a
-                  href="tel:+212⁠661387815"
+                  href="tel:+212661387815"
                   className="mt-10 w-full flex items-center justify-center gap-3 p-4 bg-green-600 rounded-lg font-bold text-lg text-white hover:bg-green-700 active:scale-95 transform transition-all duration-300 ease-in-out shadow-lg shadow-green-500/20"
                 >
                   <Phone />
-                  <span>Appeler maintenant (+212 ⁠661 387 815)</span>
+                  <span>Appeler maintenant (+212 661 387 815)</span>
                 </a>
               </div>
 
               <div className="mt-8 h-64 w-full rounded-lg overflow-hidden border border-gray-300 relative">
                 <iframe
-                  src="https://www.google.com/maps?q=Comptoir+Agricole+et+Industriel+de+Skhirat%2C%20RPN%20N%C2%BA%201%2C%20Mag%206%2C%20Complexe%20Commercial%20A%C3%AFn%20Al%20Hayat%2C%20Skhirat%2012050&hl=fr&z=16&output=embed
-"
+                  src="https://www.google.com/maps?q=Comptoir+Agricole+et+Industriel+de+Skhirat%2C%20RPN%20N%C2%BA%201%2C%20Mag%206%2C%20Complexe%20Commercial%20A%C3%AFn%20Al%20Hayat%2C%20Skhirat%2012050&hl=fr&z=16&output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
@@ -228,9 +227,8 @@ export default function ContactPage() {
                 type="submit"
                 disabled={isLoading}
 
-                className={`w-full flex items-center justify-center gap-3 p-4 bg-blue-600 rounded-lg font-bold text-lg text-white hover:bg-blue-700 active:scale-95 transform transition-all duration-300 ease-in-out shadow-lg shadow-blue-500/20 ${
-                  isLoading ? 'opacity-70 cursor-not-allowed' : ''
-                }`}
+                className={`w-full flex items-center justify-center gap-3 p-4 bg-blue-600 rounded-lg font-bold text-lg text-white hover:bg-blue-700 active:scale-95 transform transition-all duration-300 ease-in-out shadow-lg shadow-blue-500/20 ${isLoading ? 'opacity-70 cursor-not-allowed' : ''
+                  }`}
               >
                 {isLoading ? (
                   'Envoi en cours...'
