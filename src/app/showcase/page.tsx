@@ -165,12 +165,12 @@ const ShowcasePage: React.FC = () => {
     },
     {
       title: 'Pneu',
-      subtitle: 'Des pneus surélevés pour dominer tous les terrains (245 / 70 R 17).',
+      subtitle: 'Des pneus surélevés pour dominer tous les terrains .',
       items: [
         {
           image: '/images/pneu22.png',
           description:
-            'Ce pneu de dimension 245/70 R17 est conçu pour offrir une excellente adhérence sur route sèche comme mouillée, tout en garantissant confort et stabilité de conduite.',
+            'Ce pneu de dimension 245 / 70 R 17 est conçu pour offrir une excellente adhérence sur route sèche comme mouillée, tout en garantissant confort et stabilité de conduite.',
         },
         {
           image: '/images/pneu3.png',
