@@ -155,6 +155,7 @@ const ShowcasePage: React.FC = () => {
         {
           image: '/images/pneu.png',
           description: "Charge utile 1.5 T et traction jusqu'à 3 T",
+
         },
         {
           image: '/images/motor.png',
@@ -167,7 +168,7 @@ const ShowcasePage: React.FC = () => {
       subtitle: 'Des pneus surélevés pour dominer tous les terrains (245 / 70 R 17).',
       items: [
         {
-          image: '/images/pneu22.png',
+          image: '/images/pneuu.png',
           description:
             'Ce pneu de dimension 245/70 R17 est conçu pour offrir une excellente adhérence sur route sèche comme mouillée, tout en garantissant confort et stabilité de conduite.',
         },

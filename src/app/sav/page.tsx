@@ -76,7 +76,7 @@ export default function SAVPage() {
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Header />
 
-      <main className="flex-grow pt-20">
+      <main className="flex-grow ">
         {/* Hero Section */}
         <div className="relative h-[50vh] bg-gray-800 text-white flex items-center justify-center">
           <div className="absolute inset-0">

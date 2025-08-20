@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
-
 import { motion } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 import {
   Car,
   User,
@@ -19,6 +19,7 @@ import {
 
 export default function DevisPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -31,10 +32,36 @@ export default function DevisPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Données du devis :', formData);
-    setIsSubmitted(true);
+    setIsLoading(true);
+
+    try {
+      // Remplacez ces valeurs par vos informations EmailJS
+      const serviceID = 'YOUR_SERVICE_ID';
+      const templateID = 'YOUR_TEMPLATE_ID';
+      const publicKey = 'YOUR_PUBLIC_KEY';
+
+      await emailjs.send(
+        serviceID,
+        templateID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+        },
+        publicKey
+      );
+
+      console.log('Email envoyé avec succès!');
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi de l\'email:', error);
+      alert('Une erreur est survenue lors de l\'envoi de votre demande. Veuillez réessayer.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (isSubmitted) {
@@ -55,7 +82,15 @@ export default function DevisPage() {
               Nous avons bien reçu votre demande et nous vous contacterons très prochainement.
             </p>
             <button
-              onClick={() => setIsSubmitted(false)}
+              onClick={() => {
+                setIsSubmitted(false);
+                setFormData({
+                  name: '',
+                  email: '',
+                  phone: '',
+                  message: '',
+                });
+              }}
               className="mt-8 px-8 py-3 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition-colors"
             >
               Faire une autre demande
@@ -104,6 +139,7 @@ export default function DevisPage() {
                   name="name"
                   placeholder="Nom complet"
                   required
+                  value={formData.name}
                   onChange={handleChange}
                   className="w-full pl-12 p-4 bg-white border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                 />
@@ -115,6 +151,7 @@ export default function DevisPage() {
                   name="email"
                   placeholder="Adresse e-mail"
                   required
+                  value={formData.email}
                   onChange={handleChange}
                   className="w-full pl-12 p-4 bg-white border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                 />
@@ -125,6 +162,7 @@ export default function DevisPage() {
                   type="tel"
                   name="phone"
                   placeholder="Numéro de téléphone"
+                  value={formData.phone}
                   onChange={handleChange}
                   className="w-full pl-12 p-4 bg-white border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                 />
@@ -135,15 +173,19 @@ export default function DevisPage() {
                   name="message"
                   rows={5}
                   placeholder="Un message ou des précisions ?"
+                  value={formData.message}
                   onChange={handleChange}
                   className="w-full pl-12 p-4 bg-white border-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none transition-all"
                 ></textarea>
               </div>
               <button
                 type="submit"
-                className="w-full p-4 bg-blue-600 text-white rounded-lg font-bold text-lg hover:bg-blue-700 active:scale-95 transform transition-all duration-300 ease-in-out shadow-md"
+                disabled={isLoading}
+                className={`w-full p-4 bg-blue-600 text-white rounded-lg font-bold text-lg hover:bg-blue-700 active:scale-95 transform transition-all duration-300 ease-in-out shadow-md ${
+                  isLoading ? 'opacity-70 cursor-not-allowed' : ''
+                }`}
               >
-                Envoyer ma demande
+                {isLoading ? 'Envoi en cours...' : 'Envoyer ma demande'}
               </button>
             </form>
           </motion.div>
