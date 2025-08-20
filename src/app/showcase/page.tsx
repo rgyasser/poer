@@ -154,7 +154,8 @@ const ShowcasePage: React.FC = () => {
         },
         {
           image: '/images/pneu.png',
-          description: "Charge utile 1 -> 1.5 T ",
+          description: "Charge utile 1.5 T et traction jusqu'à 3 T",
+
         },
         {
           image: '/images/motor.png',
@@ -164,7 +165,7 @@ const ShowcasePage: React.FC = () => {
     },
     {
       title: 'Pneu',
-      subtitle: 'Des pneus surélevés pour dominer tous les terrains.',
+      subtitle: 'Des pneus surélevés pour dominer tous les terrains (245 / 70 R 17).',
       items: [
         {
           image: '/images/pneuu.png',
