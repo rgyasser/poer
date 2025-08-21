@@ -302,17 +302,6 @@ const ShowcasePage: React.FC = () => {
             )}
           </AnimatePresence>
           <div className="absolute inset-0 bg-black/40"></div>
-
-          {/* Call to Action Content */}
-          {/* <div className="absolute inset-0 flex flex-col items-center justify-center text-center z-10 p-4">
-            <Link
-              href="/contact"
-              className="bg-black/20 backdrop-blur-sm border border-white/75 text-white font-bold py-2 px-6 rounded-lg text-base hover:bg-white hover:text-blue-600 transition-colors duration-300"
-            >
-              Contactez-nous
-            </Link>
-          </div> */}
-
           {/* Carousel Controls */}
           <button
             onClick={prevSlide}

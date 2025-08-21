@@ -256,9 +256,9 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full flex items-center justify-center gap-3 p-4 bg-blue-600 rounded-lg font-bold text-lg text-white hover:bg-blue-700 active:scale-95 transform transition-all duration-300 ease-in-out shadow-lg shadow-blue-500/20 ${
-                  isLoading ? 'opacity-70 cursor-not-allowed' : ''
-                }`}
+                  className={`w-full flex items-center justify-center gap-3 p-4 bg-blue-600 rounded-lg font-bold text-lg text-white hover:bg-blue-700 active:scale-95 transform transition-all duration-300 ease-in-out shadow-lg shadow-blue-500/20 ${isLoading ? 'opacity-70 cursor-not-allowed' : ''
+                    }`}
+
               >
                 {isLoading ? (
                   'Envoi en cours...'
