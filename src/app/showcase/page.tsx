@@ -165,12 +165,12 @@ const ShowcasePage: React.FC = () => {
     },
     {
       title: 'Pneu',
-      subtitle: 'Des pneus surélevés pour dominer tous les terrains (245 / 70 R 17).',
+      subtitle: 'Des pneus surélevés pour dominer tous les terrains .',
       items: [
         {
-          image: '/images/pneuu.png',
+          image: '/images/pneu22.png',
           description:
-            'Ce pneu de dimension 245/70 R17 est conçu pour offrir une excellente adhérence sur route sèche comme mouillée, tout en garantissant confort et stabilité de conduite.',
+            'Ce pneu de dimension 245 / 70 R 17 est conçu pour offrir une excellente adhérence sur route sèche comme mouillée, tout en garantissant confort et stabilité de conduite.',
         },
         {
           image: '/images/pneu3.png',
@@ -520,6 +520,16 @@ const ShowcasePage: React.FC = () => {
             </div>
           </div>
         </section>
+
+        {/* CTA Section */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <Link
+              href="/contact"
+              className="inline-block bg-black text-white font-bold py-3 px-8 rounded-lg hover:text-black hover:bg-stone-100 transition-colors duration-300"
+            >
+              Contactez-nous
+            </Link>
+          </div>
       </main>
     </div>
   );
