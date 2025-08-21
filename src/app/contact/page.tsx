@@ -99,7 +99,6 @@ export default function ContactPage() {
 
       <main
         className="flex-grow w-full bg-cover bg-center bg-fixed text-gray-900 pt-24"
-        style={{ backgroundImage: "url('images/image2.jpg')" }}
       >
         <div className="min-h-full w-full flex items-center justify-center p-4 sm:p-6 lg:p-8">
           <motion.div

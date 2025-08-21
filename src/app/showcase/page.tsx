@@ -520,6 +520,16 @@ const ShowcasePage: React.FC = () => {
             </div>
           </div>
         </section>
+
+        {/* CTA Section */}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <Link
+              href="/contact"
+              className="inline-block bg-black text-white font-bold py-3 px-8 rounded-lg hover:text-black hover:bg-stone-100 transition-colors duration-300"
+            >
+              Contactez-nous
+            </Link>
+          </div>
       </main>
     </div>
   );
