@@ -4,8 +4,27 @@ import React, { useState, useRef } from 'react';
 import { User, Mail, MessageSquare, Send, MapPin, Phone, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
-import Header from '@/components/common/Header';
-import Footer from '@/components/common/Footer';
+
+// Mock components for Header and Footer since they are not provided
+const Header = () => (
+  <header className="bg-white/80 backdrop-blur-md shadow-sm fixed top-0 left-0 right-0 z-50">
+    <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
+      <div className="text-2xl font-bold text-gray-800">MySite</div>
+      <div>
+        <a href="#" className="text-gray-600 hover:text-blue-600 px-3 py-2">Home</a>
+        <a href="#" className="text-gray-600 hover:text-blue-600 px-3 py-2">About</a>
+        <a href="#" className="text-blue-600 font-semibold px-3 py-2">Contact</a>
+      </div>
+    </nav>
+  </header>
+);
+
+const Footer = () => (
+  <footer className="bg-gray-800 text-white p-4 text-center">
+    <p>&copy; 2024 MySite. All rights reserved.</p>
+  </footer>
+);
+
 
 export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -237,8 +256,9 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full flex items-center justify-center gap-3 p-4 bg-blue-600 rounded-lg font-bold text-lg text-white hover:bg-blue-700 active:scale-95 transform transition-all duration-300 ease-in-out shadow-lg shadow-blue-500/20 ${isLoading ? 'opacity-70 cursor-not-allowed' : ''
-                  }`}
+                  className={`w-full flex items-center justify-center gap-3 p-4 bg-blue-600 rounded-lg font-bold text-lg text-white hover:bg-blue-700 active:scale-95 transform transition-all duration-300 ease-in-out shadow-lg shadow-blue-500/20 ${isLoading ? 'opacity-70 cursor-not-allowed' : ''
+                    }`}
+
               >
                 {isLoading ? (
                   'Envoi en cours...'
