@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { User, Mail, MessageSquare, Send, MapPin, Phone, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
@@ -16,6 +16,8 @@ export default function ContactPage() {
     phone: '',
     message: '',
   });
+  // To keep the name for the thank you message after clearing the form
+  const submittedName = useRef('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -25,9 +27,10 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    submittedName.current = formData.name; // Store name before clearing
 
     try {
-      // Remplacez ces valeurs par vos informations EmailJS
+      // Replace these values with your EmailJS information
       const serviceID = 'YOUR_SERVICE_ID';
       const templateID = 'YOUR_TEMPLATE_ID';
       const publicKey = 'YOUR_PUBLIC_KEY';
@@ -53,6 +56,7 @@ export default function ContactPage() {
       });
     } catch (error) {
       console.error('Erreur lors de l\'envoi de l\'email:', error);
+      // In a real app, you'd use a more elegant notification system
       alert('Une erreur est survenue lors de l\'envoi de votre message. Veuillez réessayer.');
     } finally {
       setIsLoading(false);
@@ -65,7 +69,7 @@ export default function ContactPage() {
         <Header />
         <main
           className="flex-grow w-full bg-cover bg-center bg-fixed text-gray-900 pt-24"
-          style={{ backgroundImage: "url('images/image2.jpg')" }}
+          style={{ backgroundImage: "url('https://placehold.co/1920x1080/e2e8f0/e2e8f0?text=.')" }}
         >
           <div className="min-h-full w-full flex items-center justify-center p-4 sm:p-6 lg:p-8">
             <motion.div
@@ -77,7 +81,7 @@ export default function ContactPage() {
               <CheckCircle className="text-green-500 w-24 h-24 mx-auto mb-6" />
               <h2 className="text-3xl font-bold text-center mb-4">Message envoyé !</h2>
               <p className="text-gray-600 text-lg mb-8">
-                Merci {formData.name || 'pour votre message'}.<br />
+                Merci {submittedName.current || 'pour votre message'}.<br />
                 Nous avons bien reçu votre demande et nous vous contacterons très prochainement.
               </p>
               <button
@@ -99,6 +103,7 @@ export default function ContactPage() {
 
       <main
         className="flex-grow w-full bg-cover bg-center bg-fixed text-gray-900 pt-24"
+        style={{ backgroundImage: "url('https://placehold.co/1920x1080/e2e8f0/e2e8f0?text=.')" }}
       >
         <div className="min-h-full w-full flex items-center justify-center p-4 sm:p-6 lg:p-8">
           <motion.div
@@ -144,7 +149,9 @@ export default function ContactPage() {
                 </a>
               </div>
 
-              <div className="mt-8 h-64 w-full rounded-lg overflow-hidden border border-gray-300 relative">
+              {/* MODIFIED MAP SECTION */}
+              <div className="mt-8 h-64 w-full rounded-2xl overflow-hidden relative border border-gray-200 group">
+                {/* Background blurred map iframe */}
                 <iframe
                   src="https://www.google.com/maps?q=Comptoir+Agricole+et+Industriel+de+Skhirat%2C%20RPN%20N%C2%BA%201%2C%20Mag%206%2C%20Complexe%20Commercial%20A%C3%AFn%20Al%20Hayat%2C%20Skhirat%2012050&hl=fr&z=16&output=embed"
                   width="100%"
@@ -152,13 +159,19 @@ export default function ContactPage() {
                   style={{ border: 0 }}
                   allowFullScreen
                   loading="lazy"
-                  className="group-hover:opacity-90 transition-opacity duration-300"
+                  className="absolute inset-0 w-full h-full blur-sm scale-110 transition-all duration-500 group-hover:blur-none"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent pointer-events-none flex items-end p-4">
-                  <div className="flex items-center gap-2 bg-white/90 px-3 py-2 rounded-lg border border-gray-200">
-                    <MapPin className="text-blue-600 h-5 w-5" />
-                    <span className="text-gray-800 text-sm font-medium">GWM Poer</span>
-                  </div>
+                {/* Overlay with button */}
+                <div className="absolute inset-0 bg-black/30 flex items-center justify-center transition-all duration-500 group-hover:bg-black/10">
+                  <a
+                    href="https://www.google.com/maps/place/Comptoir+Agricole+et+Industriel+de+Skhirat/@33.8548876,-7.042571,4141m/data=!3m1!1e3!4m10!1m2!2m1!1sComptoir+Agricole+et+Industriel+de+Skhirat,+RPN+N%C2%BA+1,+Mag+6,+Complexe+Commercial+A%C3%AFn+Al+Hayat,+Skhirat+12050!3m6!1s0xda7095e9ec123e3:0x4bca8ab27c796abf!8m2!3d33.8588275!4d-7.0245422!15sCm5Db21wdG9pciBBZ3JpY29sZSBldCBJbmR1c3RyaWVsIGRlIFNraGlyYXQsIFJQTiBOwrogMSwgTWFnIDYsIENvbXBsZXhlIENvbW1lcmNpYWwgQcOvbiBBbCBIYXlhdCwgU2toaXJhdCAxMjA1MFpsImpjb21wdG9pciBhZ3JpY29sZSBldCBpbmR1c3RyaWVsIGRlIHNraGlyYXQgcnBuIG7CuiAxIG1hZyA2IGNvbXBsZXhlIGNvbW1lcmNpYWwgYcOvbiBhbCBoYXlhdCBza2hpcmF0IDEyMDUwkgEXZmFybV9lcXVpcG1lbnRfc3VwcGxpZXKaASRDaGREU1VoTk1HOW5TMFZKUTBGblNVTlVkMWxQWVRsUlJSQUKqAYICEAEqbiJqY29tcHRvaXIgYWdyaWNvbGUgZXQgaW5kdXN0cmllbCBkZSBza2hpcmF0IHJwbiBuwrogMSBtYWcgNiBjb21wbGV4ZSBjb21tZXJjaWFsIGHDr24gYWwgaGF5YXQgc2toaXJhdCAxMjA1MCgEMh4QASIaseVe9KPXT_5s0bHuI3EL36kOyNuDfH6kSv0ybhACImpjb21wdG9pciBhZ3JpY29sZSBldCBpbmR1c3RyaWVsIGRlIHNraGlyYXQgcnBuIG7CuiAxIG1hZyA2IGNvbXBsZXhlIGNvbW1lcmNpYWwgYcOvbiBhbCBoYXlhdCBza2hpcmF0IDEyMDUw4AEA-gEECAAQIg!16s%2Fg%2F11b6j7_vcz?entry=ttu&g_ep=EgoyMDI1MDgxOC4wIKXMDSoASAFQAw%3D%3D"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-3 px-6 py-3 bg-white rounded-lg font-bold text-lg text-gray-800 hover:bg-gray-100 active:scale-95 transform transition-all duration-300 ease-in-out shadow-lg hover:shadow-xl"
+                  >
+                    <MapPin className="text-blue-600" />
+                    <span>Accéder à la carte</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -193,7 +206,6 @@ export default function ContactPage() {
                 />
               </div>
 
-              {/* Numéro de téléphone */}
               <div className="relative group">
                 <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-600 transition-colors duration-300" />
                 <input
@@ -225,7 +237,6 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-
                 className={`w-full flex items-center justify-center gap-3 p-4 bg-blue-600 rounded-lg font-bold text-lg text-white hover:bg-blue-700 active:scale-95 transform transition-all duration-300 ease-in-out shadow-lg shadow-blue-500/20 ${isLoading ? 'opacity-70 cursor-not-allowed' : ''
                   }`}
               >
@@ -233,7 +244,7 @@ export default function ContactPage() {
                   'Envoi en cours...'
                 ) : (
                   <>
-                    <Send className="group-hover:translate-x-1 transition-transform duration-300" />
+                    <Send />
                     <span>Envoyer le message</span>
                   </>
                 )}

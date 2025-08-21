@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Header from '@/components/common/Header';
-import Footer from '@/components/common/Footer';
+import Link from 'next/link';
 import type { Variants } from 'framer-motion';
 import {
   User,
@@ -134,17 +134,12 @@ export default function SAVPage() {
                 </motion.div>
               ))}
             </div>
+            <div className="max-w-7xl mx-auto pt-20 px-4 sm:px-6 lg:px-8 text-center">
+              <Link href="/contact" className="inline-block bg-black text-white font-bold py-3 px-8 rounded-lg hover:text-black hover:bg-stone-100 transition-colors duration-300">
+                Contactez-nous
+              </Link>
+            </div>
           </div>
-        </div>
-
-        {/* CTA Section */}
-        <div className="container mx-auto px-6 py-16 text-center">
-          <a
-            href="/contact"
-            className="mt-8 inline-block bg-blue-600 text-white font-bold text-lg px-8 py-4 rounded-lg hover:bg-blue-700 transition-transform hover:scale-105"
-          >
-            Prendre Rendez-vous
-          </a>
         </div>
       </main>
 
